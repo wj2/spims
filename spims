@@ -1,0 +1,12 @@
+#!/usr/bin/python
+
+# general
+import sys
+# other spims
+from bin.run import main, parse_opts
+
+opts = sys.argv[1:]
+patterns, sources = parse_opts(opts)
+    
+main(patterns, sources)
+sys.exit(-1)

@@ -1,0 +1,70 @@
+#!/usr/bin/python
+
+from runner import main
+
+import sys
+import datetime
+
+A4P = '/course/cs4500wc/Assignments/A4/Patterns/'
+A4S = '/course/cs4500wc/Assignments/A4/Sources/'
+A4 = (A4P, A4S)
+
+A5P = '/course/cs4500wc/Assignments/A5/Patterns/'
+A5S = '/course/cs4500wc/Assignments/A5/Sources/'
+A5 = (A5P,A5S)
+
+A7P = '/course/cs4500wc/Assignments/A7/Patterns0/'
+A7S = '/course/cs4500wc/Assignments/A7/Sources/'
+A7 = (A7P,A7S)
+
+A7Ps = '/home/wjj/eg7/Patterns/'
+A7Ss = '/home/wjj/eg7/Sources/'
+A7s = (A7Ps,A7Ss)
+
+
+KEY = {A4 : 
+       open('/home/wjj/spims-wjj-bk-dg-dp/test/A4_key', 'rb').readlines(),
+       A5 : 
+       open('/home/wjj/spims-wjj-bk-dg-dp/test/A5_key', 'rb').readlines(),
+       A7 : 
+       open('/home/wjj/spims-wjj-bk-dg-dp/test/A7_key', 'rb').readlines(),
+       A7s : 
+       open('/home/wjj/spims-wjj-bk-dg-dp/test/A7s_key', 'rb').readlines()}
+
+
+EG_PAIRS = [A4, A5, A7, A7s]
+# EG_PAIRS = [A7]
+
+sys.stdout.write("######## BEGIN TESTS ########\n")
+sys.stdout.write(datetime.datetime.now().isoformat())
+
+for pair in EG_PAIRS:
+    sys.stdout.write("\n#######################\n"
+                     +pair[0]+"\n"
+                     +pair[1]+"\n"
+                     +"#######################\n")
+    results, diag = main(pair[0], pair[1], printMatches=False, diag=True)
+    
+    goalMatches = KEY[pair]
+    falsePos = []
+    
+    sys.stdout.write("## MATCHES FOUND ##\n")
+    for match in results:
+        m = match.toString()
+        sys.stdout.write(m)
+        if m in goalMatches:
+            goalMatches.remove(m)
+        else:
+            falsePos.append(m)
+
+    sys.stdout.write("\n## MATCHES MISSED ##\n")
+    for match in goalMatches:
+        sys.stdout.write(match)
+    
+    sys.stdout.write("\n## FALSE POS ##\n")
+    for match in falsePos:
+        sys.stdout.write(match)
+
+    sys.stdout.write("\n## DIAG ##\n")
+    sys.stdout.write(str(diag))
+    
