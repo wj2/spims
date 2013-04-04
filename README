@@ -1,0 +1,62 @@
+﻿Team Members:
+Brendan Kelly - kelly.bren@husky.neu.edu
+William Johnston - williamjjohnston@gmail.com
+Daniel Grover - grover.dan@husky.neu.edu
+Daniel Perruzzi - perruzzi.d@husky.neu.edu
+
+Extract all of the files to some directory and cd to that 
+directory. 
+
+The program is then called with the command 
+
+    ./spims -p <input1> -s <input2>
+
+where
+
+    <input1> is the name of an existing file in JPEG, PNG, or
+    GIF format without animation (the "pattern image")
+
+    <input2> is the name of an existing file in JPEG, PNG, or
+    GIF format without animation (the "source image")
+
+or using the flag -pdir in place of -p where
+   
+   <input1> is a completely flat directory containing only
+   JPG, GIF, or PNG image files to be used as the "pattern"
+   images
+
+or using the flag -sdir in place of -s where
+
+   <input2> is a completely flat directory containing only 
+   JPG, GIF, or PNG image files to be used as the "source"
+   images
+
+If the program finds a match, it will print a line in the format
+of the following to standard out
+
+   <file1> matches <file2> at <m1>x<n1>+<x>+<y> 
+
+where
+
+    <file1> is the short name (without the name of its enclosing
+    directory, et cetera) of the pattern image
+
+    <file2> is the short name (without the name of its enclosing
+    directory, et cetera) of the matching source image
+
+    <m1> is the width of the subimage that matches <file1>
+    (which should be the same as the width of the pattern image)
+
+    <n1> is the height of the subimage that matches <file1>
+    (which should be the same as the height of the pattern image)
+
+    <x> is the horizontal offset of the top left corner of that
+    subimage from the top left corner of the source image
+
+    <y> is the vertical offset of the top left corner of that
+    subimage from the top left corner of the source image
+
+Any errors produced by the software will go to standard error. 
+
+Acknowledgements: We used the Numpy and Scipy libraries for 
+Python which are installed on the CCIS Linux machines.
