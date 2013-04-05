@@ -29,9 +29,9 @@ def choose_weapon(p):
 
     """
     if p.warr.size == 3:
-        return brute_force_single
+        return single_arrow
     elif p.arr.std() < 0.0001:
-        return brute_force_std
+        return barrage_of_arrows
     else:
         return nccfft
 
