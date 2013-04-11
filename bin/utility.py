@@ -180,7 +180,7 @@ class Match:
         self.x = x
         self.y = y
 
-    def toString(self):
+    def __str__(self):
         return (self.pattern + " matches " + self.source
                 + " at " + str(self.w) + "x" + str(self.h) + 
                 "+" + str(self.x) + "+" + str(self.y))+"\n"

@@ -194,6 +194,7 @@ def train_cars(s, p, scatu, fact):
         pScaled = Pattern.resize(p, scaling)
                 
         if abs(pScaled.arr.std() - p.stdev) > SLOP:
+            print "broke : std"
             break;
 
         # choose comparison method based on pScaled
@@ -262,15 +263,15 @@ def find_window(mX, mY, scaling, SL=10):
     """
     vals = []
     leftBound = mX[0]
-    rightBound = mX[0]+scaling[0]+1
+    rightBound = mX[0]+scaling[1]+1
     upBound = mY[0]
-    downBound = mY[0]+scaling[1]+1
+    downBound = mY[0]+scaling[0]+1
     for i,xi in enumerate(mX):
         yi = mY[i]
 
         leftBound = min(leftBound, xi)
-        rightBound = max(rightBound, xi+scaling[0]+1)
+        rightBound = max(rightBound, xi+scaling[1]+1)
         upBound = min(upBound, yi)
-        downBound = max(downBound, yi+scaling[1]+1)
+        downBound = max(downBound, yi+scaling[0]+1)
 
-    return (leftBound-SL, rightBound+SL, upBound-SL, downBound+SL)
+    return (max(leftBound-SL, 0), rightBound+SL, max(upBound-SL,0), downBound+SL)

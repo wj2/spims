@@ -25,13 +25,18 @@ def look_into_windows(si, pi, windows):
        List of matches found by the comparisons. 
     """
     goodOnes = []
+    print windows
     for x in sorted(windows.keys(), key=lambda key: key[0]*key[1], 
                     reverse=True):
         
+        print x, windows[x]
         # create window on source image
         swindow = Source.peerWindow(si, windows[x])
 
         pScaled = Pattern.resize(pi, x)
+        
+        print pScaled.arr.shape, swindow.arr.shape
+
         method = choose_weapon(pScaled)
         nn, thresh, mean = method(swindow, pScaled)
         if mean < 1:

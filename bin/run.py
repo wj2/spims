@@ -47,7 +47,7 @@ def main(patterns, sources, printMatches=True, diag=False):
 
     if printMatches == True:
         for m in matches:
-            sys.stdout.write(m.toString())
+            sys.stdout.write(str(m))
 
         if diag:
             print '\nTotal time: ' + str(time() - t0)
