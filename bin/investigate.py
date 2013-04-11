@@ -36,16 +36,53 @@ def look_into_windows(si, pi, windows):
         pScaled = Pattern.resize(pi, x)
         
         print pScaled.arr.shape, swindow.arr.shape
-
-        method = choose_weapon(pScaled)
-        nn, thresh, mean = method(swindow, pScaled)
-        if mean < 1:
-            nn[nn > 1.015] = 0
-            mY, mX = np.where(nn > thresh)
-            goodOnes += pack_the_goods(nn, si, pScaled, mX, mY, x, windows[x])
-
+        
+        goodOnes += just_try_it_punk(swindow, pScaled)
+        
     return [Match(m[4], m[3], m[1][0], m[1][1], m[0])
             for m in overlaps(goodOnes)]
+
+def one_shot_one_match(si, pi):
+    """Compare only one pair without any scaling or windows.
+    
+    We didn't do the low-res. We're shooting from the hip here, boys.
+    
+    ----------
+    si, pi : Image
+       Source and Pattern to be compared.
+
+    ----------
+    out : list[match]
+       List of matches found by the comparisons. 
+    """
+    goodOnes = just_try_it_punk(si, pi, pi.arr.shape, 
+                                {pi.arr.shape:(0,0,0,0)})
+    return [Match(m[4], m[3], m[1][0], m[1][1], m[0])
+            for m in overlaps(goodOnes)]
+
+
+def just_try_it_punk(si, pi, x, windows):
+    """Does the actual comparison. 
+
+    Stores the goods for later.
+
+    ----------
+    si, pi : Image
+       Source and Pattern to be compared.
+
+    ----------
+    out : list[match]
+       List of match info found by the comparison.     
+    """
+    method = choose_weapon(pi)
+    nn, thresh, mean = method(si, pi)
+    if mean < 1:
+        nn[nn > 1.015] = 0
+        mY, mX = np.where(nn > thresh)
+        return pack_the_goods(nn, si, pi, mX, mY, x, windows[x])
+    else: 
+        return []
+
 
 def pack_the_goods(nn, s, p, mX, mY, scaling, window):
     """Turn raw data into more raw data. 
