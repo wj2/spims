@@ -194,7 +194,6 @@ def train_cars(s, p, scatu, fact):
         pScaled = Pattern.resize(p, scaling)
                 
         if abs(pScaled.arr.std() - p.stdev) > SLOP:
-            print "broke : std"
             break;
 
         # choose comparison method based on pScaled

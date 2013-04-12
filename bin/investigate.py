@@ -25,17 +25,13 @@ def look_into_windows(si, pi, windows):
        List of matches found by the comparisons. 
     """
     goodOnes = []
-    print windows
     for x in sorted(windows.keys(), key=lambda key: key[0]*key[1], 
                     reverse=True):
         
-        print x, windows[x]
         # create window on source image
         swindow = Source.peerWindow(si, windows[x])
 
         pScaled = Pattern.resize(pi, x)
-        
-        print pScaled.arr.shape, swindow.arr.shape
         
         goodOnes += just_try_it_punk(swindow, pScaled)
         
@@ -57,7 +53,6 @@ def one_shot_one_match(si, pi):
     """
     goodOnes = just_try_it_punk(si, pi, pi.arr.shape, 
                                 {pi.arr.shape:(0,0,0,0)})
-    # print max(goodOnes, key=lambda x: x[0])
     return [Match(m[4], m[3], m[1][0], m[1][1], m[0])
             for m in overlaps(goodOnes)]
 
@@ -70,6 +65,13 @@ def just_try_it_punk(si, pi, x, windows):
     ----------
     si, pi : Image
        Source and Pattern to be compared.
+
+    x : tuple[int]
+       Scaling of the pattern image. 
+
+    windows : dict
+       Dictionary associating image scaling to a window,
+       or (0,0,0,0) we are doing a one-off full comparison.
 
     ----------
     out : list[match]

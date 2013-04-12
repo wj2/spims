@@ -203,6 +203,5 @@ def nccfft_post(full, fact, p):
         else:
             thresh = min(pmean + 5.5  * pmstd, .984)
 
-    print pmean, thresh, probMatrix.max()
     return probMatrix, thresh, pmean
 
