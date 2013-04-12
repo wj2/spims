@@ -50,7 +50,7 @@ for pair in EG_PAIRS:
     
     sys.stdout.write("## MATCHES FOUND ##\n")
     for match in results:
-        m = match.toString()
+        m = str(match)
         sys.stdout.write(m)
         if m in goalMatches:
             goalMatches.remove(m)

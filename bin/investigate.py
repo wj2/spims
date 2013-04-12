@@ -57,6 +57,7 @@ def one_shot_one_match(si, pi):
     """
     goodOnes = just_try_it_punk(si, pi, pi.arr.shape, 
                                 {pi.arr.shape:(0,0,0,0)})
+    # print max(goodOnes, key=lambda x: x[0])
     return [Match(m[4], m[3], m[1][0], m[1][1], m[0])
             for m in overlaps(goodOnes)]
 
@@ -76,8 +77,7 @@ def just_try_it_punk(si, pi, x, windows):
     """
     method = choose_weapon(pi)
     nn, thresh, mean = method(si, pi)
-    if mean < 1:
-        nn[nn > 1.015] = 0
+    if nn.max() < 1.015:
         mY, mX = np.where(nn > thresh)
         return pack_the_goods(nn, si, pi, mX, mY, x, windows[x])
     else: 
