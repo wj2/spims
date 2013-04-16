@@ -74,31 +74,53 @@ def parse_opts(opt):
     if len(opt) != 4:
         sys.stderr.write('IOError: Malformed input\n')
         sys.exit(1)
+
     opt = [(opt[0],opt[1]),(opt[2],opt[3])]
     if opt[0][0] == '-p':
-        if os.path.isdir(opt[0][1]):
+        if os.path.isfile(opt[0][1]):
+            pattern = opt[0][1]
+        else:
             sys.stderr.write('IOError: Expected pattern file\n')
             sys.exit(1)
-        else: pattern = opt[0][1]
+
     elif opt[0][0] == '-pdir' or opt[0][0] == '--pdir':
         if os.path.isdir(opt[0][1]):
-            pattern = opt[0][1] + '/'
+            ppath = opt[0][1] + '/'
+            for x in os.listdir(ppath):
+                if os.path.isdir(x):
+                    sys.stderr.write('IOError: Pattern directory contains directories\n')
+                    sys.exit(1)
+            pattern = ppath
         else: 
             sys.stderr.write('IOError: Expected pattern dir\n')
             sys.exit(1)
+    elif opt[0][0] != '-p' and opt[0][0] != '-pdir' and opt[0][0] != '--pdir':
+        sys.stderr.write('IOError: Expected pattern image or directory')
+        sys.exit(1)
     if opt[1][0] == '-s':
-        if os.path.isdir(opt[1][1]):
+        if os.path.isfile(opt[1][1]):
+            source = opt[1][1]
+        else: 
             sys.stderr.write('IOError: Expected source file\n')
             sys.exit(1)
-        else: source = opt[1][1]
     elif opt[1][0] == '-sdir' or opt[1][0] == '--sdir':
         if os.path.isdir(opt[1][1]):
-            source = opt[1][1] + '/'
+            spath = opt[0][1] + '/'
+            for x in os.listdir(spath):
+                if os.path.isdir(x):
+                    sys.stderr.write('IOError: Source directory contains directories\n')
+                    sys.exit(1)
+
+            source = spath
         else: 
             sys.stderr.write('IOError: Expected source dir\n')
             sys.exit(1)
+    elif opt[1][0] != '-s' and opt[1][0] != '-sdir' and opt[1][0] != '--sdir':
+        sys.stderr.write('IOError: Expected source image or directory')
+        sys.exit(1)
     else:
         sys.stderr.write('IOError: Malformed input\n')
         sys.exit(1)
 
     return pattern, source
+
