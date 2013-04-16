@@ -40,8 +40,7 @@ def imread(fname):
             sys.exit(1)
             
     fa = np.array(im.convert('F'))
-    if im.format == 'GIF':
-        im = im.convert('RGB')
+    im = im.convert('RGB')
     wa = np.array(im)
     
     fp.close()
