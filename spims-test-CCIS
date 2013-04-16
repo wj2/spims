@@ -21,6 +21,10 @@ A7Ps = '/home/wjj/eg7/Patterns/'
 A7Ss = '/home/wjj/eg7/Sources/'
 A7s = (A7Ps,A7Ss)
 
+EP = '/home/wjj/egE/Patterns/'
+ES = '/home/wjj/egE/Sources/'
+E = (EP, ES)
+
 
 KEY = {A4 : 
        open('/home/wjj/spims-wjj-bk-dg-dp/test/A4_key', 'rb').readlines(),
@@ -29,10 +33,12 @@ KEY = {A4 :
        A7 : 
        open('/home/wjj/spims-wjj-bk-dg-dp/test/A7_key', 'rb').readlines(),
        A7s : 
-       open('/home/wjj/spims-wjj-bk-dg-dp/test/A7s_key', 'rb').readlines()}
+       open('/home/wjj/spims-wjj-bk-dg-dp/test/A7s_key', 'rb').readlines(),
+       E : 
+       open('/home/wjj/spims/test/E_key','rb').readlines()}
 
 
-EG_PAIRS = [A4, A5, A7, A7s]
+EG_PAIRS = [A4, A5, A7, E]
 # EG_PAIRS = [A7]
 
 sys.stdout.write("######## BEGIN TESTS ########\n")
